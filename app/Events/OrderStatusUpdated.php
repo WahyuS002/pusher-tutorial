@@ -33,6 +33,6 @@ class OrderStatusUpdated implements ShouldBroadcast
      */
     public function broadcastOn()
     {
-        return new PrivateChannel('channel-name');
+        return new Channel('orders');
     }
 }

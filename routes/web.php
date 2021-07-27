@@ -15,7 +15,9 @@ use Illuminate\Support\Facades\Route;
 */
 
 Route::get('/', function () {
-    OrderStatusUpdated::dispatch(1);
-
     return view('welcome');
+});
+
+Route::get('/update', function () {
+    OrderStatusUpdated::dispatch(1);
 });
