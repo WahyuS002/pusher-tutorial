@@ -1879,7 +1879,7 @@ __webpack_require__.r(__webpack_exports__);
     axios.get("/api/projects/".concat(this.project.id)).then(function (response) {
       return _this.tasks = response.data;
     });
-    window.Echo.channel("tasks").listen("TaskCreated", function (e) {
+    window.Echo.channel("tasks." + this.project.id).listen("TaskCreated", function (e) {
       _this.tasks.push(e.task.body);
     });
   }

@@ -32,9 +32,12 @@ export default {
             .get(`/api/projects/${this.project.id}`)
             .then(response => (this.tasks = response.data));
 
-        window.Echo.channel("tasks").listen("TaskCreated", e => {
-            this.tasks.push(e.task.body);
-        });
+        window.Echo.channel("tasks." + this.project.id).listen(
+            "TaskCreated",
+            e => {
+                this.tasks.push(e.task.body);
+            }
+        );
     }
 };
 </script>
