@@ -10,27 +10,31 @@
 
 <script>
 export default {
+    props: ["project"], //accept the project prop
     data() {
         return {
             tasks: [],
             newTask: ""
         };
     },
+    methods: {
+        addTask() {
+            axios.post(`/api/projects/${this.project.id}/tasks`, {
+                body: this.newTask
+            });
 
+            this.tasks.push(this.newTask);
+            this.newTask = "";
+        }
+    },
     created() {
-        axios.get("/tasks").then(response => (this.tasks = response.data));
+        axios
+            .get(`/api/projects/${this.project.id}`)
+            .then(response => (this.tasks = response.data));
 
         window.Echo.channel("tasks").listen("TaskCreated", e => {
             this.tasks.push(e.task.body);
         });
-    },
-
-    methods: {
-        addTask() {
-            axios.post("tasks", { body: this.newTask });
-
-            this.tasks.push(this.newTask);
-        }
     }
 };
 </script>

@@ -1856,29 +1856,32 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
+  props: ["project"],
+  //accept the project prop
   data: function data() {
     return {
       tasks: [],
       newTask: ""
     };
   },
+  methods: {
+    addTask: function addTask() {
+      axios.post("/api/projects/".concat(this.project.id, "/tasks"), {
+        body: this.newTask
+      });
+      this.tasks.push(this.newTask);
+      this.newTask = "";
+    }
+  },
   created: function created() {
     var _this = this;
 
-    axios.get("/tasks").then(function (response) {
+    axios.get("/api/projects/".concat(this.project.id)).then(function (response) {
       return _this.tasks = response.data;
     });
     window.Echo.channel("tasks").listen("TaskCreated", function (e) {
       _this.tasks.push(e.task.body);
     });
-  },
-  methods: {
-    addTask: function addTask() {
-      axios.post("tasks", {
-        body: this.newTask
-      });
-      this.tasks.push(this.newTask);
-    }
   }
 });
 
